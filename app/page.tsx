@@ -1,7 +1,6 @@
 "use client"
-import Image from "next/image";
 import Wrapper from "./components/Wrapper";
-import { Layers } from "lucide-react";
+import { FileCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createEmptyInvoice, getInvoicesByEmail } from "./actions";
 import { useUser } from "@clerk/nextjs";
@@ -32,6 +31,29 @@ export default function Home() {
   useEffect(() => {
     fetchInvoices()
   }, [email])
+
+  useEffect(() => {
+    if (invoices.length === 0) return;
+  
+    const today = new Date();
+  
+    const updated = invoices.map((invoice) => {
+      const dueDate = new Date(invoice.dueDate);
+      if (invoice.status === 2 && dueDate < today) {
+        return { ...invoice, status: 5 }; // Impayée
+      }
+      return invoice;
+    });
+  
+    // Ne met à jour l’état que si au moins une facture a été modifiée
+    const isChanged = updated.some((inv, index) => inv.status !== invoices[index].status);
+  
+    if (isChanged) {
+      setInvoices(updated);
+    }
+  }, [invoices]);
+  
+  
 
   useEffect(() => {
     setIsNameValid(invoiceName.length <= 60)
@@ -68,11 +90,11 @@ export default function Home() {
         <div className=" grid md:grid-cols-3 gap-4">
           <div className="cursor-pointer border border-accent rounded-xl flex flex-col justify-center items-center p-5"
             onClick={() => (document.getElementById('my_modal_3') as HTMLDialogElement).showModal()}>
-            <div className="font-bold text-accent">
+            <div className="font-bold ">
               Créer une facture
             </div>
             <div className='bg-accent-content text-accent  rounded-full p-2 mt-2'>
-              <Layers className='h-6 w-6' />
+              <FileCheck className='h-6 w-6' />
             </div>
           </div>
 

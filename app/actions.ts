@@ -80,50 +80,25 @@ export async function createEmptyInvoice(email: string, name: string) {
 export async function getInvoicesByEmail(email: string) {
     if (!email) return;
     try {
-        const user = await prisma.user.findUnique({
-            where: {
-                email: email
-            },
+      const user = await prisma.user.findUnique({
+        where: { email },
+        include: {
+          invoices: {
             include: {
-                invoices: {
-                    include: {
-                        lines: true,
-                    }
-                }
+              lines: true
             }
-        })
-        // Statuts possibles :
-        // 1: Brouillon
-        // 2: En attente
-        // 3: Payée
-        // 4: Annulée
-        // 5: Impayé
-        if (user) {
-            const today = new Date()
-            const updatedInvoices = await Promise.all(
-                user.invoices.map(async (invoice) => {
-                    const dueDate = new Date(invoice.dueDate)
-                    if (
-                        dueDate < today &&
-                        invoice.status == 2
-                    ) {
-                        const updatedInvoice = await prisma.invoice.update({
-                            where: { id: invoice.id },
-                            data: { status: 5 },
-                            include: { lines: true }
-                        })
-                        return updatedInvoice
-                    }
-                    return invoice
-                })
-            )
-            return updatedInvoices
-
+          }
         }
+      });
+  
+      if (user) {
+        return user.invoices;
+      }
     } catch (error) {
-        console.error(error)
+      console.error(error);
     }
-}
+  }
+  
 
 export async function getInvoiceById(invoiceId: string) {
     try {

@@ -6,3 +6,8 @@
     overflow-y: auto;
     max-height: 100vh;
 }
+.text-outlined {
+    color: transparent;
+    -webkit-text-stroke: 1px black;
+  }
+  

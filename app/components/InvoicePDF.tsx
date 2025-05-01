@@ -2,7 +2,7 @@ import { Invoice, Totals } from '@/type'
 import confetti from 'canvas-confetti'
 import html2canvas from 'html2canvas-pro'
 import jsPDF from 'jspdf'
-import { ArrowDownFromLine, Layers } from 'lucide-react'
+import { ArrowDownFromLine, FileCheck } from 'lucide-react'
 import React, { useRef } from 'react'
 
 interface FacturePDFProps {
@@ -73,10 +73,10 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
                                 <div className='flex items-center'>
 
                                     <div className='bg-accent-content text-accent  rounded-full p-2'>
-                                        <Layers className='h-6 w-6' />
+                                        <FileCheck className='h-6 w-6' />
                                     </div>
                                     <span className='ml-3 font-bold text-2xl italic'>
-                                        In<span className='text-accent'>Voice</span>
+                                        Auto<span className='text-accent'>Fact</span>
                                     </span>
                                 </div>
                             </div>
