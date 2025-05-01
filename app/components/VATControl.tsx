@@ -17,20 +17,7 @@ const VATControl: React.FC<Props> = ({ invoice, setInvoice }) => {
     });
   };
 
-  const mockInvoice = {
-    id: 'test-id',
-    name: 'Facture test',
-    vatActive: false,
-    vatRate: 20,
-    lines: [],
-    issuerName: '',
-    issuerAddress: '',
-    clientName: '',
-    clientAddress: '',
-    invoiceDate: '',
-    dueDate: '',
-    status: 1
-  };
+  
   
 
   const handleVatRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
