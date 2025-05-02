@@ -31,7 +31,7 @@ const Page = ({ params }: { params: Promise<{ invoiceId: string }> }) => {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   useEffect(() => {
     fetchInvoice();
   }, []);
