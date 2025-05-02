@@ -7,7 +7,7 @@ jest.mock('../lib/prisma', () => ({
       findUnique: jest.fn().mockResolvedValue({ id: 'u1' })
     },
     invoice: {
-      findUnique: jest.fn().mockResolvedValue(null), // simulate: ID doesn't exist yet
+      findUnique: jest.fn().mockResolvedValue(null), 
       create: jest.fn().mockResolvedValue({
         id: 'generated-id',
         name: 'Facture test',
@@ -30,7 +30,6 @@ jest.mock('../lib/prisma', () => ({
 test('crée une facture vide avec les valeurs par défaut', async () => {
   await createEmptyInvoice('test@user.com', 'Facture test');
 
-  // Tu peux aussi vérifier que la fonction create a bien été appelée :
   const prisma = (await import('../lib/prisma')).default;
   expect(prisma.invoice.create).toHaveBeenCalledWith(
     expect.objectContaining({
